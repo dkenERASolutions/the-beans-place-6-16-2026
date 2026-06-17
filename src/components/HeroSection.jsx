@@ -30,7 +30,6 @@
 
 /* --- YOUR IMPORTS GO HERE --- */
 
-
 // STEP 2: Animation Variants (outside the component)
 // Create two objects that define how text animates:
 //
@@ -51,7 +50,6 @@
 // Answer: They don't change, so React doesn't need to recreate them on every render.
 
 /* --- YOUR ANIMATION VARIANTS GO HERE --- */
-
 
 // STEP 3: Create the HeroSection component
 // export default function HeroSection() { ... }
@@ -83,3 +81,79 @@
 //   - Floating price badge (circular badge showing "FROM $14.99 per bag")
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
+import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import heroBeans from "../assets/hero-beans.png";
+import Button from "./ui/Button";
+import Badge from "./ui/Badge";
+
+const textVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.12 } }
+};
+
+const wordVariant = {
+    hidden: { opacity: 0, y: 60, rotateX: -40 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }
+    }
+};
+
+export default function HeroSection() {
+    const { scrollY } = useScroll();
+    const imgScale = useTransform(scrollY, [0, 600], [1.35, 0.9]);
+    const imgOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+    const imgY = useTransform(scrollY, [0, 600], [0, 100]);
+
+    return (
+        <>
+            {/* LEFT - Text */}
+            <div id="home" className="hero-text-column">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}>
+                    <Badge variant="outline" className="mb-5">
+                        ✦ Premium Coffee Beans - Roasted Fresh Daily
+                    </Badge>
+                </motion.div>
+                
+                <motion.h1
+                    className="h1-stack"
+                    style={{ margin: 0, perspective: "600px" }}
+                    variants={textVariants}
+                    initial="hidden"
+                    animate="visible">
+                        <motion.span variants={wordVariant} style={{ display: "inline-block"}}>
+                            YOUR PLACE
+                        </motion.span>
+                        <br />
+                        <motion.span
+                            variants={wordVariant}
+                            className="muted"
+                            style={{ display: "inline-block" }}>
+                                FOR COFFEE
+                        </motion.span>
+                        <br />
+                        <motion.span variants={wordVariant} style={{ display: "inline-block"}}>
+                            BREWING
+                        </motion.span>
+                </motion.h1>
+                
+                <motion.p
+                    className="lead"
+                    style={{ marginTop: 18 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}>
+                    Farm-to-cup single-origin beans from Ethiopia, Columbia & beyond. Freshly roasted in small batches and shipped to your door within 48 hours.
+                </motion.p>
+                
+                
+            </div>
+        </>
+    );
+}
