@@ -55,6 +55,7 @@
 /* --- YOUR COMPONENT CODE GOES HERE --- */
 import HeroSection from "./components/HeroSection";
 import NavBar from "./components/NavBar";
+import FooterSection from "./components/FooterSection";
 
 export default function App() {
     return (
@@ -80,6 +81,9 @@ export default function App() {
             {/* CONTACT */}
 
             {/* FOOTER */}
+            <section className="bg-footer">
+                <FooterSection />
+            </section>
         </div>
     );
 }

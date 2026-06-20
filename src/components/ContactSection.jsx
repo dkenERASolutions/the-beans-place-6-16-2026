@@ -136,3 +136,53 @@
 //   </div>
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
+
+import { useState } from "react";
+
+export default function ContactForm() {
+    const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const[message, setMessage] = useState("");
+    const[formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: ""
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({...prev, [name]: value}))
+    }
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+        
+        if(
+            !formData.firstName ||
+            !formData.lastName ||
+            !formData.email ||
+            !formData.message
+        ) {
+            setMessage("Please fill in all fields!");
+            return;
+        }
+        
+        setLoading(true);
+        
+        try{
+            await sendEmail(formData);
+            setMessage("Thank you! Your message has been sent.");
+            setFormData({ firstName: "", lastName: "", email: "", message: "" });
+        } catch {
+            setMessage("Error sending message. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    return(
+        
+    );
+}
