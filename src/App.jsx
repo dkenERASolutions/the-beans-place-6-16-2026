@@ -56,8 +56,11 @@
 import HeroSection from "./components/HeroSection";
 import NavBar from "./components/NavBar";
 import FooterSection from "./components/FooterSection";
-import ContactForm from "./components/ContactSection";
 import ContactSection from "./components/ContactSection";
+import ContactForm from "./components/ContactForm";
+import RibbonTicker from "./components/RibbonTicker";
+import { Ribbon } from "lucide-react";
+import ProductShowcase from "./components/ProductShowcase";
 
 export default function App() {
     return (
@@ -72,9 +75,14 @@ export default function App() {
                 </div>
             </section>
 
+            <RibbonTicker />
+
             {/* FEATURES / CAROUSEL */}
 
             {/* PRODUCT SHOWCASE */}
+            <section className="bg-cta">
+                <ProductShowcase />
+            </section>
 
             {/* CTA */}
 
@@ -83,6 +91,7 @@ export default function App() {
             {/* CONTACT */}
             <section className="bg-cta" id="contact">
                 <ContactSection />
+                {/* <ContactForm /> */}
             </section>
 
             {/* FOOTER */}

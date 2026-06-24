@@ -401,13 +401,45 @@ function ContactFormInline() {
 }
 
 export default function ContactSection() {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const sectionRef = useRef(null);
+    const glowRef = useRef(null);
 
     useEffect(() => {
-        const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
+        let frame = 0;
+        let nextX = 0;
+        let nextY = 0;
+
+        const apply = () => {
+            frame = 0;
+            const glow = glowRef.current;
+            if (glow) {
+                glow.style.transform = `translate3d(${nextX - 192}px, ${nextY - 192}px, 0)`;
+            }
+        };
+
+        const handleMouseMove = (e) => {
+            const section = sectionRef.current;
+            if (!section) return;
+            const rect = section.getBoundingClientRect();
+            if (
+                e.clientX >= rect.left &&
+                e.clientX <= rect.right &&
+                e.clientY >= rect.top &&
+                e.clientY <= rect.bottom
+            ) {
+                nextX = e.clientX;
+                nextY = e.clientY;
+                // Coalesce moves into a single paint per frame instead of
+                // re-rendering React on every mousemove event.
+                if (!frame) frame = requestAnimationFrame(apply);
+            }
+        };
+
         window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            if (frame) cancelAnimationFrame(frame);
+        };
     }, []);
 
     return (
@@ -569,11 +601,9 @@ export default function ContactSection() {
 
             {/* Mouse follow glow (desktop only) */}
             <div
+                ref={glowRef}
                 className="contact-mouse-glow"
-                style={{
-                    left: `${mousePos.x - 192}px`,
-                    top: `${mousePos.y - 192}px`
-                }}
+                style={{ left: 0, top: 0, pointerEvents: "none", willChange: "transform" }}
             />
         </div>
     );

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const presets = {
@@ -26,7 +26,9 @@ export default function ScrollReveal({
     const isInView = useInView(ref, { once, amount });
     const preset = presets[animation] || presets.fadeUp;
 
-    const Component = motion.create(as);
+    // Memoize so a new motion component type isn't created on every render —
+    // otherwise React remounts the subtree and restarts the animation (flicker).
+    const Component = useMemo(() => motion.create(as), [as]);
 
     return (
         <Component
