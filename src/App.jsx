@@ -61,6 +61,8 @@ import ContactForm from "./components/ContactForm";
 import RibbonTicker from "./components/RibbonTicker";
 import { Ribbon } from "lucide-react";
 import ProductShowcase from "./components/ProductShowcase";
+import FeaturesSection from "./components/FeaturesSection";
+import CtaSection from "./components/CtaSection";
 
 export default function App() {
     return (
@@ -78,6 +80,9 @@ export default function App() {
             <RibbonTicker />
 
             {/* FEATURES / CAROUSEL */}
+            <section className="features bg-features" id="shop">
+                <FeaturesSection />
+            </section>
 
             {/* PRODUCT SHOWCASE */}
             <section className="bg-cta">
@@ -85,6 +90,9 @@ export default function App() {
             </section>
 
             {/* CTA */}
+            <section className="bg-cta">
+                <CtaSection />
+            </section>
 
             {/* ABOUT */}
 
