@@ -53,6 +53,7 @@
 // for the navigation links in the NavBar.
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
+import { Routes, Route } from "react-router-dom";
 import HeroSection from "./components/HeroSection";
 import NavBar from "./components/NavBar";
 import FooterSection from "./components/FooterSection";
@@ -64,8 +65,9 @@ import ProductShowcase from "./components/ProductShowcase";
 import FeaturesSection from "./components/FeaturesSection";
 import CtaSection from "./components/CtaSection";
 import AboutSection from "./components/AboutSection";
+import StoriesPage from "./pages/StoriesPage";
 
-export default function App() {
+function HomePage() {
     return (
         <div className="app">
             {/* NAVBAR */}
@@ -111,5 +113,14 @@ export default function App() {
                 <FooterSection />
             </section>
         </div>
+    );
+}
+
+export default function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/stories" element={<StoriesPage />} />
+        </Routes>
     );
 }

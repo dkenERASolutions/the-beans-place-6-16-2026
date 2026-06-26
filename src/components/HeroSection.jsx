@@ -82,6 +82,7 @@
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import heroBeans from "../assets/hero-beans.png";
 import Button from "./ui/Button";
@@ -103,6 +104,7 @@ const wordVariant = {
 };
 
 export default function HeroSection() {
+    const navigate = useNavigate();
     const { scrollY } = useScroll();
     const imgScale = useTransform(scrollY, [0, 600], [1.35, 0.9]);
     const imgOpacity = useTransform(scrollY, [0, 500], [1, 0]);
@@ -168,12 +170,7 @@ export default function HeroSection() {
                         SHOP COFFEE ☕
                     </Button>
 
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        onClick={() =>
-                            document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
-                        }>
+                    <Button variant="outline" size="lg" onClick={() => navigate("/stories")}>
                         OUR STORY
                     </Button>
                 </motion.div>
